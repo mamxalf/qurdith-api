@@ -31,12 +31,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         messages: 'unknown rowi!'
     }
 
-    let rowi = req.query.rowi as string
-    if (rowi == null) {
+    let rowi = getRowi(req.query.rowi as string)
+    if (rowi.length == 0) {
         return res.status(404).json(results)
     }
 
-    const data: Hadith[] = getRowi(rowi)
+    const data: Hadith[] = rowi
     const page = parseInt(req.query.page as string) || 1
     const limit = parseInt(req.query.limit as string) || 10
     const startIndex = (page - 1) * limit
